@@ -7,6 +7,11 @@
 #include "mmu.h"
 #include "proc.h"
 
+int sys_getParentID(void)
+{
+  return getParentID();
+}
+
 int
 sys_fork(void)
 {
