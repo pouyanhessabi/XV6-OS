@@ -533,7 +533,24 @@ procdump(void)
   }
 }
 
-int getParentID(){
+int getParentID(void){
   struct proc *p = myproc();
-  return p->pid;
+  return p->parent->pid;
 }
+
+
+void getchildren(int * child_pids) {
+
+
+    struct proc *p= myproc();;
+    struct proc *p1=p;
+    int count = 0;
+    acquire(&ptable.lock);
+
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
+      if(p->parent->pid == p1->pid){ 
+          child_pids[count] = p->pid;
+          count++;
+      }
+    release(&ptable.lock);
+    }

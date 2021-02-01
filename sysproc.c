@@ -6,8 +6,17 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+int
+sys_getchildren(void){
+  int *children;
+  if (argptr(0 ,(void*)&children , sizeof(int)*64) != 0)
+    return -1;
+  getchildren(children);
+  return 0;
+}
 
-int sys_getParentID(void)
+int 
+sys_getParentID(void)
 {
   return getParentID();
 }
