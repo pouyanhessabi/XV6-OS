@@ -3,7 +3,8 @@
 #include "user.h"
 
 int main(){
-
+    int n = fork();
+    if (n > 0 ) { 
     printf(1,"%d",getParentID());
 
     /* wait for all child to terminate */
@@ -13,5 +14,5 @@ int main(){
     sleep(1);
 
     exit();
-    return 0;
+}
 }
