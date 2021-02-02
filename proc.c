@@ -553,4 +553,24 @@ void getchildren(int * child_pids) {
           count++;
       }
     release(&ptable.lock);
+}
+
+int
+set_priority(int pid, int priority)
+{
+  struct proc *p;
+  if((priority > 6) || (priority < 1))
+      priority = 5;
+  else {
+    acquire(&ptable.lock);
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->pid == pid) {
+          p->priority = priority;
+          break;
+          }
+        }
+    release(&ptable.lock);
     }
+
+  return pid;
+}
