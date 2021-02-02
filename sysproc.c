@@ -6,6 +6,15 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+
+int
+sys_set_priority(void){
+  int pid;
+  int priority;
+  return set_priority(pid,priority);
+}
+
+
 int
 sys_getchildren(void){
   int *children;

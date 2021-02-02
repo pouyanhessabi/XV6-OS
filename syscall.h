@@ -22,4 +22,6 @@
 #define SYS_close  21
 #define SYS_getParentID  22
 #define SYS_getchildren 23
+#define SYS_set_priority 24
+
 
