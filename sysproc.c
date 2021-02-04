@@ -116,3 +116,13 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+int
+sys_getSyscallCounter(){
+  int n;
+  if (argint(0, &n) < 0){
+    cprintf("false input\n");
+    return -1;
+  }
+  return  myproc()->sysCallCount[n - 1]; //array is 0 based
+}
