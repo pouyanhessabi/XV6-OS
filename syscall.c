@@ -107,6 +107,9 @@ extern int sys_getParentID(void);
 extern int sys_getchildren(void);
 extern int sys_set_priority(void);
 extern int sys_getSyscallCounter(void);
+extern int sys_changePolicy(void);
+
+
 
 
 static int (*syscalls[])(void) = {
@@ -135,6 +138,8 @@ static int (*syscalls[])(void) = {
 [SYS_getchildren]  sys_getchildren,
 [SYS_set_priority]  sys_set_priority,
 [SYS_getSyscallCounter] sys_getSyscallCounter,
+[SYS_changePolicy] sys_changePolicy,
+
 
 };
 
