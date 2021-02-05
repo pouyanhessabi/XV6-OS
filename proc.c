@@ -327,16 +327,17 @@ scheduler(void)
   struct proc *p;
   struct cpu *c = mycpu();
   c->proc = 0;
-  
   for(;;){
     // Enable interrupts on this processor.
     sti();
-
+    my_policy = -1;
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-     if (policy==1)
+    p->clockTime = 0;
+    if (policy==1)
      {
+        my_policy = policy;
         if(p->state != RUNNABLE)
         continue;
      }
@@ -348,6 +349,7 @@ scheduler(void)
       // before jumping back to us.
     else if (policy==2)
     {
+      my_policy = policy;
       struct proc *highP = 0;
       struct proc *p1 = 0;
 
@@ -364,6 +366,12 @@ scheduler(void)
 
     }
     
+    else if (policy == 3){
+      my_policy = policy;
+      if(p->state != RUNNABLE)
+        continue;
+        // farghi nadare ba halate addi faqat bayad be 
+    }
       
 
       c->proc = p;
@@ -414,6 +422,7 @@ yield(void)
 {
   acquire(&ptable.lock);  //DOC: yieldlock
   myproc()->state = RUNNABLE;
+  myproc()->clockTime = 0;
   sched();
   release(&ptable.lock);
 }

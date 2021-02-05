@@ -10,6 +10,8 @@ struct sleeplock;
 struct stat;
 struct superblock;
 
+int my_policy; // for pass policy in custom round-robin
+
 // bio.c
 void            binit(void);
 struct buf*     bread(uint, uint);
