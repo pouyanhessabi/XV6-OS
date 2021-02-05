@@ -34,16 +34,17 @@ int main()
         if(fork() == 0) 
         { 
             set_priority(getpid(),pr);
-    
-
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 250; i++)
             {
-                printf(1," child number :  %d\n",getpid());
+                printf(1," child :  %d\n",getpid());
+                printf(1," pr :  %d\n",pr);
+                
             }
-            exit(); 
+             exit(); 
         } 
     } 
   while(wait() != -1) { }
 
     sleep(1);
+      exit(); 
 } 
