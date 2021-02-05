@@ -7,6 +7,7 @@ int main(int argc, char** argv){
     int num = atoi(tmp);
     int pr=0;
     int temp=changePolicy(num);
+    num=temp;
     for(int i=0;i<30;i++) // loop will run n times (n=5) 
     {   
         if(i<5)
