@@ -2,9 +2,11 @@
 #include "stat.h"
 #include "user.h"
 
-int main() 
-{ 
+int main(int argc, char** argv){
+    char* tmp = argv[1];
+    int num = atoi(tmp);
     int pr=0;
+    int temp=changePolicy(num);
     for(int i=0;i<30;i++) // loop will run n times (n=5) 
     {   
         if(i<5)
@@ -34,10 +36,13 @@ int main()
         if(fork() == 0) 
         { 
             set_priority(getpid(),pr);
+            
             for (int i = 0; i < 250; i++)
-            {
-                printf(1," child :  %d\n",getpid());
-                printf(1," pr :  %d\n",pr);
+            {   
+                
+                printf(1,"\n child :  %d\n",getpid());
+                
+                /*printf(1," pr :  %d\n",pr);*/
                 
             }
              exit(); 

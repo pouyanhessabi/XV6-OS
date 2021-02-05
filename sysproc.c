@@ -7,13 +7,24 @@
 #include "mmu.h"
 #include "proc.h"
 
+
+
+
+int
+sys_changePolicy(void){
+  int a;
+  if(argint(0, &a) != 0)
+    return -1;
+  return changePolicy(a);
+}
+
 int
 sys_set_priority(void){
   int pid;
   int priority;
-  if(argint(0, &pid) < 0)
+  if(argint(0, &pid) != 0)
     return -1;
-  if(argint(1, &priority) < 0)
+  if(argint(1, &priority) != 0)
     return -1;
   return set_priority(pid,priority);
 }

@@ -15,6 +15,7 @@ struct {
 static struct proc *initproc;
 
 int nextpid = 1;
+int policy =1 ;
 extern void forkret(void);
 extern void trapret(void);
 
@@ -334,19 +335,24 @@ scheduler(void)
     // Loop over process table looking for process to run.
     acquire(&ptable.lock);
     for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
-      /*if(p->state != RUNNABLE)
+     if (policy==1)
+     {
+        if(p->state != RUNNABLE)
         continue;
-     */ 
+     }
+     
+    
+     
       // Switch to chosen process.  It is the process's job
       // to release ptable.lock and then reacquire it
       // before jumping back to us.
-
+    else if (policy==2)
+    {
       struct proc *highP = 0;
       struct proc *p1 = 0;
 
       if(p->state != RUNNABLE)
           continue;
-              // Choose the process with highest priority (among RUNNABLEs)
       highP = p;
       for(p1 = ptable.proc; p1 < &ptable.proc[NPROC]; p1++){
           if((p1->state != RUNNABLE) || (highP->priority <= p1->priority))
@@ -356,6 +362,9 @@ scheduler(void)
       if(highP != 0)
       p = highP;
 
+    }
+    
+      
 
       c->proc = p;
       switchuvm(p);
@@ -591,4 +600,10 @@ set_priority(int pid, int priority)
     }
 
   return pid;
+}
+int changePolicy(int pl){
+  
+  policy=pl;
+  return 0;
+  
 }
