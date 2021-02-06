@@ -582,7 +582,6 @@ void getchildren(int * child_pids) {
     struct proc *p1;
     int count=0;
     acquire(&ptable.lock);
-
     for(p1 = ptable.proc; p1 < &ptable.proc[NPROC]; p1++)
       if(p1->parent->pid == p->pid){ 
           child_pids[count] = p1->pid;

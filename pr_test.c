@@ -8,7 +8,7 @@ int main(int argc, char** argv){
     int pr=0;
     changePolicy(num);
     if (num == 2){
-    for(int i=0;i<30;i++) // loop will run n times (n=5) 
+    for(int i=0;i<30;i++) 
     {   
         if(i<5)
             pr=6;
