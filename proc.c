@@ -610,9 +610,9 @@ set_priority(int pid, int priority)
 
   return pid;
 }
-int changePolicy(int pl){
+void
+ changePolicy(int pl){
   
   policy=pl;
-  return 0;
   
 }

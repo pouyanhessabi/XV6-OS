@@ -12,10 +12,11 @@
 
 int
 sys_changePolicy(void){
-  int a;
-  if(argint(0, &a) != 0)
+  int policy;
+  if(argint(0, &policy) != 0)
     return -1;
-  return changePolicy(a);
+  changePolicy(policy);
+  return 0;
 }
 
 int
