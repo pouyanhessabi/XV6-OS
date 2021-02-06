@@ -6,8 +6,8 @@ int main(int argc, char** argv){
     char* tmp = argv[1];
     int num = atoi(tmp);
     int pr=0;
-    int temp=changePolicy(num);
-    num=temp;
+    changePolicy(num);
+    if (num == 2){
     for(int i=0;i<30;i++) // loop will run n times (n=5) 
     {   
         if(i<5)
@@ -38,7 +38,7 @@ int main(int argc, char** argv){
         { 
             set_priority(getpid(),pr);
             
-            for (int i = 0; i < 250; i++)
+            for (int j = 0; j < 250; j++)
             {   
                 
                 printf(1,"\n child :  %d\n",getpid());
@@ -48,7 +48,21 @@ int main(int argc, char** argv){
             }
              exit(); 
         } 
-    } 
+    }
+    }
+    //loop for round-robin test
+    if (num == 3){
+        for (int i = 0; i < 10; i++){ 
+            if (fork() == 0){
+                for (int j = 0; j < 1000; j++){
+                    printf(1,"pi %d : %d\n",getpid(), j);
+                }
+                exit();
+            }
+        }
+    }
+
+
   while(wait() != -1) { }
 
     sleep(1);
