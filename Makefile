@@ -182,7 +182,7 @@ UPROGS=\
 	_wc\
 	_zombie\
 	_getParentIDtest\
-	_childTest\
+	_getChildrenTest\
 	_pr_test\
 	_getSyscallCounterTest\
 
@@ -255,7 +255,7 @@ EXTRA=\
 	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c \
 	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
 	_getParentIDtest.c\
-	_childTest.c\
+	_getChildrenTest.c\
 	_pr_test\
 	getSyscallCounterTest.c\
 	printf.c umalloc.c\

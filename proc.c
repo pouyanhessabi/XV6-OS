@@ -578,14 +578,14 @@ int getParentID(void){
 void getchildren(int * child_pids) {
 
 
-    struct proc *p= myproc();;
-    struct proc *p1=p;
-    int count = 0;
+    struct proc *p= myproc();
+    struct proc *p1;
+    int count=0;
     acquire(&ptable.lock);
 
-    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++)
-      if(p->parent->pid == p1->pid){ 
-          child_pids[count] = p->pid;
+    for(p1 = ptable.proc; p1 < &ptable.proc[NPROC]; p1++)
+      if(p1->parent->pid == p->pid){ 
+          child_pids[count] = p1->pid;
           count++;
       }
     release(&ptable.lock);
