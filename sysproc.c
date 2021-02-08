@@ -20,9 +20,9 @@ int sys_set_priority(void)
 {
   int pid;
   int priority;
-  if (argint(0, &pid) != 0)
+  if (argint(0, &pid) < 0)
     return -1;
-  if (argint(1, &priority) != 0)
+  if (argint(1, &priority) < 0)
     return -1;
   return set_priority(pid, priority);
 }
@@ -30,7 +30,7 @@ int sys_set_priority(void)
 int sys_getchildren(void)
 {
   int *children;
-  if (argptr(0, (void *)&children, sizeof(int) * 64) != 0)
+  if (argptr(0, (void *)&children, sizeof(int) * 64) < 0)
     return -1;
   getchildren(children);
   return 0;
