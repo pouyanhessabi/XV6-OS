@@ -45,3 +45,8 @@ int atoi(const char*);
 
 int waitAndReturnTime(int);
 int creationTime[10], terminationTime[10], runningTime[10], readyTime[10], sleepingTime[10];
+int getCreationUpdate(int);
+int getTerminationUpdate(int);
+int getRunningUpdate(int);
+int getReadyUpdate(int);
+int getSleepUpdate(int);

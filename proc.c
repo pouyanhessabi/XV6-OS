@@ -680,8 +680,7 @@ waitAndReturnTime(int i){
         runningTime[i] = p->myProcessTime.runningTime;
         readyTime[i] = p->myProcessTime.readyTime;
         sleepingTime[i] = p->myProcessTime.sleepingTime;
-        if (myproc())
-          cprintf("creation %d is : %d, terminai : %d, run ; %d, read %d, sleep : %d\n",i, creationTime[i], terminationTime[i], runningTime[i], readyTime[i], sleepingTime[i]);
+        
         
         // *priority = p->priority;
 
@@ -703,7 +702,10 @@ waitAndReturnTime(int i){
         p->clockTime = 0;
 
         p->state = UNUSED;
+        if (myproc())
+          cprintf("in wait finction creation %d is : %d, termination : %d, run ; %d, read %d, sleep : %d\n",i, creationTime[i], terminationTime[i], runningTime[i], readyTime[i], sleepingTime[i]);
         release(&ptable.lock);
+        
         return pid;
       }
     }
@@ -715,4 +717,24 @@ waitAndReturnTime(int i){
     // Wait for children to exit.  (See wakeup1 call in proc_exit.)
     sleep(curproc, &ptable.lock);  //DOC: wait-sleep
   }
+}
+
+int getCreationUpdate(int i){
+  return creationTime[i];
+}
+
+int getTerminationUpdate(int i){
+  return terminationTime[i];
+}
+
+int getRunningUpdate(int i){
+  return runningTime[i];
+}
+
+int getReadyUpdate(int i){
+  return readyTime[i];
+}
+
+int getSleepUpdate(int i){
+  return sleepingTime[i];
 }

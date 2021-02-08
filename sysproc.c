@@ -148,3 +148,57 @@ sys_waitAndReturnTime(void){
   }
   return waitAndReturnTime(i);
 }
+
+int
+sys_getCreationUpdate(void){
+  int i;
+  if (argint(0, &i) < 0)
+  {
+    cprintf("sooti shod");
+    return -1;
+  }
+ return getCreationUpdate(i); 
+}
+
+int 
+sys_getTerminationUpdate(void){
+  int i;
+  if (argint(0, &i) < 0)
+  {
+    cprintf("sooti shod");
+    return -1;
+  }
+ return getTerminationUpdate(i);
+}
+
+int
+sys_getRunningUpdate(void){
+  int i;
+  if (argint(0, &i) < 0)
+  {
+    cprintf("sooti shod");
+    return -1;
+  }
+ return getRunningUpdate(i); 
+
+}
+int
+sys_getReadyUpdate(void){
+int i;
+  if (argint(0, &i) < 0)
+  {
+    cprintf("sooti shod");
+    return -1;
+  }
+ return getReadyUpdate(i); 
+}
+int 
+sys_getSleepUpdate(void){
+int i;
+  if (argint(0, &i) < 0)
+  {
+    cprintf("sooti shod");
+    return -1;
+  }
+ return getSleepUpdate(i); 
+}

@@ -109,6 +109,11 @@ extern int sys_set_priority(void);
 extern int sys_getSyscallCounter(void);
 extern int sys_changePolicy(void);
 extern int sys_waitAndReturnTime(void);
+extern int sys_getCreationUpdate(void);
+extern int sys_getTerminationUpdate(void);
+extern int sys_getRunningUpdate(void);
+extern int sys_getReadyUpdate(void);
+extern int sys_getSleepUpdate(void);
 
 
 
@@ -141,6 +146,11 @@ static int (*syscalls[])(void) = {
 [SYS_getSyscallCounter] sys_getSyscallCounter,
 [SYS_changePolicy] sys_changePolicy,
 [SYS_waitAndReturnTime] sys_waitAndReturnTime,
+[SYS_getCreationUpdate] sys_getCreationUpdate,
+[SYS_getTerminationUpdate] sys_getTerminationUpdate,
+[SYS_getRunningUpdate] sys_getRunningUpdate,
+[SYS_getReadyUpdate] sys_getReadyUpdate,
+[SYS_getSleepUpdate] sys_getSleepUpdate,
 
 
 };

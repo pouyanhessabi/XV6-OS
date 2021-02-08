@@ -26,5 +26,9 @@
 #define SYS_getSyscallCounter 25
 #define SYS_changePolicy 26
 #define SYS_waitAndReturnTime 27
-
+#define SYS_getCreationUpdate 28
+#define SYS_getTerminationUpdate 29
+#define SYS_getRunningUpdate 30
+#define SYS_getReadyUpdate 31
+#define SYS_getSleepUpdate 32
 

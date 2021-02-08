@@ -60,7 +60,7 @@ int main(int argc, char **argv)
             pid[i] = 0;
             if (fork() == 0)
             {
-                for (int j = 0; j < 1000; j++)
+                for (int j = 0; j < 2000; j++)
                 {
                     printf(1, "pi %d : %d\n", getpid(), j);
                 }
@@ -70,21 +70,22 @@ int main(int argc, char **argv)
         }
         for (int i = 0; i < 10; i++){
             pid[i] = waitAndReturnTime(i);
-            // printf(1, "pid %d, %d \n", pid[i], creationTime[i]);
-            avg_creationTime += creationTime[i];
-            avg_terminationTime += terminationTime[i];
-            avg_runningTime += runningTime[i]; 
-            avg_readyTime += readyTime[i];
-            avg_sleepingTime += sleepingTime[i];
+            // printf(1, "\n\nmy id is %d\ncreation time : %d\ntermination time : %d\nrunning time : %d\nready time : %d\nsleeping time : %d\n\n", pid[i], getCreationUpdate(i), getTerminationUpdate(i), getRunningUpdate(i), getReadyUpdate(i), getSleepUpdate(i));
+            avg_creationTime += getCreationUpdate(i);
+            avg_terminationTime += getTerminationUpdate(i);
+            avg_runningTime += getRunningUpdate(i); 
+            avg_readyTime += getReadyUpdate(i);
+            avg_sleepingTime += getSleepUpdate(i);
        
         }
-        num = pid[3];
-        printf(1, "avg creation : %d \navg termination : %d \navg running : %d \navg ready : %d \navg sleeep : %d\n", avg_creationTime, avg_terminationTime, avg_runningTime, avg_readyTime, avg_sleepingTime);
-        avg_creationTime = avg_creationTime / 10 ;
+        for (int i = 0; i < 10; i++)
+            printf(1, "\n\nmy id is %d\ncreation time : %d\ntermination time : %d\nrunning time : %d\nready time : %d\nsleeping time : %d\n\n", pid[i], getCreationUpdate(i), getTerminationUpdate(i), getRunningUpdate(i), getReadyUpdate(i), getSleepUpdate(i));
+        avg_creationTime = avg_creationTime / 10;
         avg_terminationTime /= 10;
         avg_runningTime /= 10;
         avg_readyTime /= 10;
         avg_sleepingTime /= 10;
+        printf(1, "avg creation : %d \navg termination : %d \navg running : %d \navg ready : %d \navg sleeep : %d\n", avg_creationTime, avg_terminationTime, avg_runningTime, avg_readyTime, avg_sleepingTime);
     }
 
     while (wait() != -1)
