@@ -66,15 +66,17 @@ int main(int argc, char **argv)
         avg_runningTime /= 30;
         avg_readyTime /= 30;
         avg_sleepingTime /= 30;
-        printf(1, "avg creation : %d \navg termination : %d \navg running : %d \navg ready : %d \navg sleeep : %d\n", avg_creationTime, avg_terminationTime, avg_runningTime, avg_readyTime, avg_sleepingTime);
+        printf(1, "avg creation : %d \navg termination : %d \navg running : %d \navg ready : %d \navg sleeep : %d\n",
+         avg_creationTime, avg_terminationTime, avg_runningTime, avg_readyTime, avg_sleepingTime);
         int cbt = avg_runningTime;
         int waitingTime = avg_readyTime + avg_sleepingTime;
         int turnAroundTime = avg_terminationTime - avg_creationTime;
-        printf(1, "\n\nCBT(running state): %d\nWaiting time(ready + sleep): %d\nturnarround time(termmination - creation): %d\n", cbt, waitingTime, turnAroundTime);
+        printf(1, "\n\nCBT(running state): %d\nWaiting time(ready + sleep): %d\nturnarround time(termmination - creation): %d\n",
+         cbt, waitingTime, turnAroundTime);
     }
 
     //loop for round-robin test
-    if (num == 3)
+    if (num == 3 || num == 1)
     {
         for (int i = 0; i < 10; i++)
         {
@@ -105,11 +107,13 @@ int main(int argc, char **argv)
         avg_runningTime /= 10;
         avg_readyTime /= 10;
         avg_sleepingTime /= 10;
-        printf(1, "avg creation : %d \navg termination : %d \navg running : %d \navg ready : %d \navg sleeep : %d\n", avg_creationTime, avg_terminationTime, avg_runningTime, avg_readyTime, avg_sleepingTime);
+        printf(1, "avg creation : %d \navg termination : %d \navg running : %d \navg ready : %d \navg sleeep : %d\n",
+         avg_creationTime, avg_terminationTime, avg_runningTime, avg_readyTime, avg_sleepingTime);
         int cbt = avg_runningTime;
         int waitingTime = avg_readyTime + avg_sleepingTime;
         int turnAroundTime = avg_terminationTime - avg_creationTime;
-        printf(1, "\n\nQuantum is %d\n\nCBT(running state): %d\nWaiting time(ready + sleep): %d\nturnarround time(termmination - creation): %d\n", 10, cbt, waitingTime, turnAroundTime);
+        printf(1, "\n\nCBT(running state): %d\nWaiting time(ready + sleep): %d\nturnarround time(termmination - creation): %d\n",
+          cbt, waitingTime, turnAroundTime);
     }
     while (wait() != -1)
     {
