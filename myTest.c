@@ -45,7 +45,7 @@ int main(int argc, char **argv)
 
                 for (int j = 0; j < 250; j++)
                 {
-                    printf(1, "\n child :  %d\n", getpid());
+                    printf(2, "\n %d :  %d\n", getpid(),j);
                 }
                 exit();
             }
