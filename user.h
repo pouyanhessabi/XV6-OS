@@ -42,3 +42,6 @@ void* memset(void*, int, uint);
 void* malloc(uint);
 void free(void*);
 int atoi(const char*);
+
+int waitAndReturnTime(int);
+int creationTime[10], terminationTime[10], runningTime[10], readyTime[10], sleepingTime[10];

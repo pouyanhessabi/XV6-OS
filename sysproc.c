@@ -138,3 +138,13 @@ sys_getSyscallCounter(){
   }
   return  myproc()->sysCallCount[n - 1]; //array is 0 based
 }
+
+int
+sys_waitAndReturnTime(void){
+  int i;
+  if(argint(0, &i) < 0){
+    cprintf("sooti shod");
+    return -1;
+  }
+  return waitAndReturnTime(i);
+}

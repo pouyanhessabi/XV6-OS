@@ -32,6 +32,15 @@ struct context {
   uint eip;
 };
 
+struct processTime{
+  int creationTime;
+  int terminationTime;
+  int runningTime;
+  int readyTime;    
+  int sleepingTime;
+};
+// for finding around,waiting,burst time
+
 enum procstate { UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE };
 
 // Per-process state
@@ -52,7 +61,9 @@ struct proc {
   char name[16];               // Process name (debugging)
   int priority ;
   int sysCallCount[26]; // 26 is number of system calls   
-  uint clockTime;            
+  uint clockTime;
+  struct processTime myProcessTime;
+  
 };
 
 // Process memory is laid out contiguously, low addresses first:

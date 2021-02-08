@@ -51,8 +51,13 @@ trap(struct trapframe *tf)
     if(cpuid() == 0){
       acquire(&tickslock);
       ticks++;
-      if (myproc())
-        myproc()->clockTime++;
+      // if(myproc()){
+        refreshTime();
+        
+        // cprintf("time is refrshing , cr : %d\n", creationTime[ticks]);
+        // }
+      // if (myproc())
+      //   myproc()->clockTime++;
       wakeup(&ticks);
       release(&tickslock);
     }
@@ -106,12 +111,20 @@ trap(struct trapframe *tf)
   // If interrupts were on while locks held, would need to check nlock.
   if(myproc() && myproc()->state == RUNNING &&
      tf->trapno == T_IRQ0+IRQ_TIMER){
-    if(my_policy != 3)
-      yield();
-    else if (my_policy == 3 && myproc()->clockTime >= QUANTUM)
-    {
+    if(my_policy != 3){
+      myproc()->clockTime = 0;
       yield();
     }
+    else if(my_policy == 3 && myproc()->clockTime < QUANTUM){
+      myproc()->clockTime++;
+      yield();
+    }
+    else if (my_policy == 3 && myproc()->clockTime >= QUANTUM)
+    {
+      myproc()->clockTime = 0;
+      yield();
+    }
+
       
      }
   // Check if the process has been killed since we yielded

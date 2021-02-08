@@ -87,9 +87,15 @@ allocproc(void)
   return 0;
 
 found:
+  p->myProcessTime.creationTime = ticks;
   p->state = EMBRYO;
   p->pid = nextpid++;
   p->priority=3;
+  p->myProcessTime.runningTime = 0;
+  p->myProcessTime.sleepingTime = 0;
+  p->myProcessTime.terminationTime = 0;
+  p->myProcessTime.readyTime = 0;
+  p->clockTime = 0;
 
   release(&ptable.lock);
 
@@ -113,6 +119,7 @@ found:
   p->context = (struct context*)sp;
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
+
 
   return p;
 }
@@ -296,6 +303,15 @@ wait(void)
         p->parent = 0;
         p->name[0] = 0;
         p->killed = 0;
+
+        p->priority = 0;
+        p->myProcessTime.creationTime = 0;
+        p->myProcessTime.terminationTime = 0;
+        p->myProcessTime.runningTime = 0;
+        p->myProcessTime.readyTime = 0;
+        p->myProcessTime.sleepingTime = 0;
+        p->clockTime = 0;
+
         p->state = UNUSED;
         release(&ptable.lock);
         return pid;
@@ -610,8 +626,93 @@ set_priority(int pid, int priority)
   return pid;
 }
 void
- changePolicy(int pl){
+changePolicy(int pl){
   
   policy=pl;
   
+}
+
+
+void refreshTime(void){
+  struct proc *p;
+  acquire(&ptable.lock);
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    switch(p->state){
+    case SLEEPING:
+      p->myProcessTime.sleepingTime++;
+      break;
+    case RUNNING:
+      p->myProcessTime.runningTime++;
+      break;
+    case RUNNABLE:
+      p->myProcessTime.readyTime++;
+      break;
+    case EMBRYO:
+      break;
+    case ZOMBIE:
+      break;
+    case UNUSED:
+      break;    
+    }
+  }
+  release(&ptable.lock);
+}
+
+
+//implementing new wait for saving time and returning pid
+int
+waitAndReturnTime(int i){
+  struct proc *p;
+  int havekids, pid;
+  struct proc *curproc = myproc();
+  acquire(&ptable.lock);
+  for(;;){
+    havekids = 0;
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+    if(p->parent != curproc){
+        continue;
+    }
+      havekids = 1;
+      if(p->state == ZOMBIE){
+        creationTime[i] = p->myProcessTime.creationTime;
+        p->myProcessTime.terminationTime = ticks;
+        terminationTime[i] = p->myProcessTime.terminationTime;
+        runningTime[i] = p->myProcessTime.runningTime;
+        readyTime[i] = p->myProcessTime.readyTime;
+        sleepingTime[i] = p->myProcessTime.sleepingTime;
+        if (myproc())
+          cprintf("creation %d is : %d, terminai : %d, run ; %d, read %d, sleep : %d\n",i, creationTime[i], terminationTime[i], runningTime[i], readyTime[i], sleepingTime[i]);
+        
+        // *priority = p->priority;
+
+        pid = p->pid;
+        kfree(p->kstack);
+        p->kstack = 0;
+        freevm(p->pgdir);
+        p->pid = 0;
+        p->parent = 0;
+        p->name[0] = 0;
+        p->killed = 0;
+
+        // p->priority = 0;
+        p->myProcessTime.creationTime = 0;
+        p->myProcessTime.terminationTime = 0;
+        p->myProcessTime.runningTime = 0;
+        p->myProcessTime.readyTime = 0;
+        p->myProcessTime.sleepingTime = 0;
+        p->clockTime = 0;
+
+        p->state = UNUSED;
+        release(&ptable.lock);
+        return pid;
+      }
+    }
+    // No point waiting if we don't have any children.
+    if(!havekids || curproc->killed){
+      release(&ptable.lock);
+      return -1;
+    }
+    // Wait for children to exit.  (See wakeup1 call in proc_exit.)
+    sleep(curproc, &ptable.lock);  //DOC: wait-sleep
+  }
 }
