@@ -7,106 +7,96 @@
 #include "mmu.h"
 #include "proc.h"
 
-
-
-
-int
-sys_changePolicy(void){
+int sys_changePolicy(void)
+{
   int policy;
-  if(argint(0, &policy) != 0)
+  if (argint(0, &policy) != 0)
     return -1;
   changePolicy(policy);
   return 0;
 }
 
-int
-sys_set_priority(void){
+int sys_set_priority(void)
+{
   int pid;
   int priority;
-  if(argint(0, &pid) != 0)
+  if (argint(0, &pid) != 0)
     return -1;
-  if(argint(1, &priority) != 0)
+  if (argint(1, &priority) != 0)
     return -1;
-  return set_priority(pid,priority);
+  return set_priority(pid, priority);
 }
 
-
-int
-sys_getchildren(void){
+int sys_getchildren(void)
+{
   int *children;
-  if (argptr(0 ,(void*)&children , sizeof(int)*64) != 0)
+  if (argptr(0, (void *)&children, sizeof(int) * 64) != 0)
     return -1;
   getchildren(children);
   return 0;
 }
 
-int 
-sys_getParentID(void)
+int sys_getParentID(void)
 {
   return getParentID();
 }
 
-int
-sys_fork(void)
+int sys_fork(void)
 {
   return fork();
 }
 
-int
-sys_exit(void)
+int sys_exit(void)
 {
   exit();
-  return 0;  // not reached
+  return 0; // not reached
 }
 
-int
-sys_wait(void)
+int sys_wait(void)
 {
   return wait();
 }
 
-int
-sys_kill(void)
+int sys_kill(void)
 {
   int pid;
 
-  if(argint(0, &pid) < 0)
+  if (argint(0, &pid) < 0)
     return -1;
   return kill(pid);
 }
 
-int
-sys_getpid(void)
+int sys_getpid(void)
 {
   return myproc()->pid;
 }
 
-int
-sys_sbrk(void)
+int sys_sbrk(void)
 {
   int addr;
   int n;
 
-  if(argint(0, &n) < 0)
+  if (argint(0, &n) < 0)
     return -1;
   addr = myproc()->sz;
-  if(growproc(n) < 0)
+  if (growproc(n) < 0)
     return -1;
   return addr;
 }
 
-int
-sys_sleep(void)
+int sys_sleep(void)
 {
   int n;
   uint ticks0;
 
-  if(argint(0, &n) < 0)
+  if (argint(0, &n) < 0)
     return -1;
   acquire(&tickslock);
   ticks0 = ticks;
-  while(ticks - ticks0 < n){
-    if(myproc()->killed){
+  while (ticks - ticks0 < n)
+  {
+    if (myproc()->killed)
+    {
       release(&tickslock);
       return -1;
     }
@@ -118,8 +108,7 @@ sys_sleep(void)
 
 // return how many clock tick interrupts have occurred
 // since start.
-int
-sys_uptime(void)
+int sys_uptime(void)
 {
   uint xticks;
 
@@ -129,76 +118,77 @@ sys_uptime(void)
   return xticks;
 }
 
-int
-sys_getSyscallCounter(){
+int sys_getSyscallCounter()
+{
   int n;
-  if (argint(0, &n) < 0){
+  if (argint(0, &n) < 0)
+  {
     cprintf("false input\n");
     return -1;
   }
-  return  myproc()->sysCallCount[n - 1]; //array is 0 based
+  return myproc()->sysCallCount[n - 1]; //array is 0 based
 }
 
-int
-sys_waitAndReturnTime(void){
+int sys_waitAndReturnTime(void)
+{
   int i;
-  if(argint(0, &i) < 0){
+  if (argint(0, &i) < 0)
+  {
     cprintf("sooti shod");
     return -1;
   }
   return waitAndReturnTime(i);
 }
 
-int
-sys_getCreationUpdate(void){
+int sys_getCreationUpdate(void)
+{
   int i;
   if (argint(0, &i) < 0)
   {
     cprintf("sooti shod");
     return -1;
   }
- return getCreationUpdate(i); 
+  return getCreationUpdate(i);
 }
 
-int 
-sys_getTerminationUpdate(void){
+int sys_getTerminationUpdate(void)
+{
   int i;
   if (argint(0, &i) < 0)
   {
     cprintf("sooti shod");
     return -1;
   }
- return getTerminationUpdate(i);
+  return getTerminationUpdate(i);
 }
 
-int
-sys_getRunningUpdate(void){
+int sys_getRunningUpdate(void)
+{
   int i;
   if (argint(0, &i) < 0)
   {
     cprintf("sooti shod");
     return -1;
   }
- return getRunningUpdate(i); 
-
+  return getRunningUpdate(i);
 }
-int
-sys_getReadyUpdate(void){
-int i;
+int sys_getReadyUpdate(void)
+{
+  int i;
   if (argint(0, &i) < 0)
   {
     cprintf("sooti shod");
     return -1;
   }
- return getReadyUpdate(i); 
+  return getReadyUpdate(i);
 }
-int 
-sys_getSleepUpdate(void){
-int i;
+int sys_getSleepUpdate(void)
+{
+  int i;
   if (argint(0, &i) < 0)
   {
     cprintf("sooti shod");
     return -1;
   }
- return getSleepUpdate(i); 
+  return getSleepUpdate(i);
 }

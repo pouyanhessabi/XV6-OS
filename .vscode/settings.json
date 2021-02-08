@@ -1,6 +1,7 @@
 {
     "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
-        "defs.h": "c"
+        "defs.h": "c",
+        "types.h": "c"
     }
 }

@@ -3,13 +3,15 @@
 #include "user.h"
 
 int main(int argc, char **argv)
-{  
+{
     char *tmp = argv[1];
     int num = atoi(tmp);
     int pr = 0;
     int pid[30];
     changePolicy(num);
     int avg_creationTime = 0, avg_terminationTime = 0, avg_runningTime = 0, avg_readyTime = 0, avg_sleepingTime = 0;
+
+    //for priority test
     if (num == 2)
     {
         for (int i = 0; i < 30; i++)
@@ -43,20 +45,17 @@ int main(int argc, char **argv)
 
                 for (int j = 0; j < 250; j++)
                 {
-
                     printf(1, "\n child :  %d\n", getpid());
-
-                    /*printf(1," pr :  %d\n",pr);*/
                 }
                 exit();
             }
         }
-        for (int i = 0; i < 30; i++){
+        for (int i = 0; i < 30; i++)
+        {
             pid[i] = waitAndReturnTime(i);
-            // printf(1, "\n\nmy id is %d\ncreation time : %d\ntermination time : %d\nrunning time : %d\nready time : %d\nsleeping time : %d\n\n", pid[i], getCreationUpdate(i), getTerminationUpdate(i), getRunningUpdate(i), getReadyUpdate(i), getSleepUpdate(i));
             avg_creationTime += getCreationUpdate(i);
             avg_terminationTime += getTerminationUpdate(i);
-            avg_runningTime += getRunningUpdate(i); 
+            avg_runningTime += getRunningUpdate(i);
             avg_readyTime += getReadyUpdate(i);
             avg_sleepingTime += getSleepUpdate(i);
         }
@@ -71,51 +70,41 @@ int main(int argc, char **argv)
         int cbt = avg_runningTime;
         int waitingTime = avg_readyTime + avg_sleepingTime;
         int turnAroundTime = avg_terminationTime - avg_creationTime;
-        printf(1, "\n\nQuantum is %d\n\nCBT(running state): %d\nWaiting time(ready + sleep): %d\nturnarround time(termmination - creation): %d\n", 10, cbt, waitingTime, turnAroundTime);
+        printf(1, "\n\nCBT(running state): %d\nWaiting time(ready + sleep): %d\nturnarround time(termmination - creation): %d\n", cbt, waitingTime, turnAroundTime);
     }
-
-
-
-
-
-
-
-
-
 
     //loop for round-robin test
     if (num == 3)
     {
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 10; i++)
         {
             pid[i] = 0;
             if (fork() == 0)
             {
-                for (int j = 0; j < 250; j++)
+                for (int j = 0; j < 1000; j++)
                 {
                     printf(1, "pi %d : %d\n", getpid(), j);
                 }
-                
+
                 exit();
             }
         }
-        for (int i = 0; i < 30; i++){
+        for (int i = 0; i < 10; i++)
+        {
             pid[i] = waitAndReturnTime(i);
-            // printf(1, "\n\nmy id is %d\ncreation time : %d\ntermination time : %d\nrunning time : %d\nready time : %d\nsleeping time : %d\n\n", pid[i], getCreationUpdate(i), getTerminationUpdate(i), getRunningUpdate(i), getReadyUpdate(i), getSleepUpdate(i));
             avg_creationTime += getCreationUpdate(i);
             avg_terminationTime += getTerminationUpdate(i);
-            avg_runningTime += getRunningUpdate(i); 
+            avg_runningTime += getRunningUpdate(i);
             avg_readyTime += getReadyUpdate(i);
             avg_sleepingTime += getSleepUpdate(i);
-       
         }
-        for (int i = 0; i < 30; i++)
+        for (int i = 0; i < 10; i++)
             printf(1, "\n\nmy id is %d\ncreation time : %d\ntermination time : %d\nrunning time : %d\nready time : %d\nsleeping time : %d\n\n", pid[i], getCreationUpdate(i), getTerminationUpdate(i), getRunningUpdate(i), getReadyUpdate(i), getSleepUpdate(i));
-        avg_creationTime = avg_creationTime / 30;
-        avg_terminationTime /= 30;
-        avg_runningTime /= 30;
-        avg_readyTime /= 30;
-        avg_sleepingTime /= 30;
+        avg_creationTime = avg_creationTime / 10;
+        avg_terminationTime /= 10;
+        avg_runningTime /= 10;
+        avg_readyTime /= 10;
+        avg_sleepingTime /= 10;
         printf(1, "avg creation : %d \navg termination : %d \navg running : %d \navg ready : %d \navg sleeep : %d\n", avg_creationTime, avg_terminationTime, avg_runningTime, avg_readyTime, avg_sleepingTime);
         int cbt = avg_runningTime;
         int waitingTime = avg_readyTime + avg_sleepingTime;
