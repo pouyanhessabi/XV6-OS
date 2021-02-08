@@ -60,7 +60,7 @@ int main(int argc, char **argv)
             pid[i] = 0;
             if (fork() == 0)
             {
-                for (int j = 0; j < 2000; j++)
+                for (int j = 0; j < 1000; j++)
                 {
                     printf(1, "pi %d : %d\n", getpid(), j);
                 }
@@ -86,8 +86,11 @@ int main(int argc, char **argv)
         avg_readyTime /= 10;
         avg_sleepingTime /= 10;
         printf(1, "avg creation : %d \navg termination : %d \navg running : %d \navg ready : %d \navg sleeep : %d\n", avg_creationTime, avg_terminationTime, avg_runningTime, avg_readyTime, avg_sleepingTime);
+        int cbt = avg_runningTime;
+        int waitingTime = avg_readyTime + avg_sleepingTime;
+        int turnAroundTime = avg_terminationTime - avg_creationTime;
+        printf(1, "\n\nCBT(running state): %d\nWaiting time(ready + sleep): %d\nturnarround time(termmination - creation): %d\n", cbt, waitingTime, turnAroundTime);
     }
-
     while (wait() != -1)
     {
     }
