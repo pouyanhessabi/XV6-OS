@@ -198,7 +198,7 @@ void            clearpteu(pde_t *pgdir, char *uva);
 
 void refreshTime(void);
 int waitAndReturnTime(int);
-int creationTime[10], terminationTime[10], runningTime[10], readyTime[10], sleepingTime[10];
+int creationTime[30], terminationTime[30], runningTime[30], readyTime[30], sleepingTime[30];
 int getCreationUpdate(int);
 int getTerminationUpdate(int);
 int getRunningUpdate(int);

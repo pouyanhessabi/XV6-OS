@@ -680,9 +680,6 @@ waitAndReturnTime(int i){
         runningTime[i] = p->myProcessTime.runningTime;
         readyTime[i] = p->myProcessTime.readyTime;
         sleepingTime[i] = p->myProcessTime.sleepingTime;
-        
-        
-        // *priority = p->priority;
 
         pid = p->pid;
         kfree(p->kstack);
@@ -693,7 +690,7 @@ waitAndReturnTime(int i){
         p->name[0] = 0;
         p->killed = 0;
 
-        // p->priority = 0;
+        p->priority = 0;
         p->myProcessTime.creationTime = 0;
         p->myProcessTime.terminationTime = 0;
         p->myProcessTime.runningTime = 0;
